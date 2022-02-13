@@ -12,8 +12,8 @@ using UserService.Data;
 namespace UserService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220212225324_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220213075608_RiseFromYourGrave")]
+    partial class RiseFromYourGrave
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,8 +32,26 @@ namespace UserService.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AccessToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ExpiresIn")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("ExpiresOn")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsSysAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastLogin")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -43,6 +61,9 @@ namespace UserService.Migrations
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
                         .ValueGeneratedOnAdd()

@@ -20,13 +20,13 @@ namespace UserService.Services
             _mapper = mapper;
         }
 
-        private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier));
-        private string GetUserRole() => _httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.Role);
+        private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        private string GetUserRole() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
 
         public async Task<ServiceResponse<List<GetUserDto>>> GetAllUsers()
         {
             var serviceResponse = new ServiceResponse<List<GetUserDto>>();
-            var dbUsers = GetUserRole().Equals("Admin") ? await _context.Users!.ToListAsync() : await _context.Users!.Where(user => user.Id == GetUserId()).ToListAsync();
+            var dbUsers = GetUserRole().Equals("Admin") ? await _context.Users.ToListAsync() : await _context.Users.Where(user => user.Id == GetUserId()).ToListAsync();
             serviceResponse.Data = dbUsers.Select(user => _mapper.Map<GetUserDto>(user)).ToList();
             return serviceResponse;
         }
